@@ -72,7 +72,7 @@ class KMeans(TransformerMixin, ClusterMixin, BaseEstimator):
                 break
 
         self.kmeans_centroids = centroids
-        return centroids
+        return self
 
     def predict(self, data):
         clusters = self._create_clusters(self.kmeans_centroids, data)

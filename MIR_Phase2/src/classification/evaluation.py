@@ -35,7 +35,33 @@ def recall(y, y_hat, pos) -> float:
     return (matrix[pos][pos]) / (matrix[pos][0] + matrix[pos][1])
 
 
-evaluation_functions = dict(accuracy=accuracy, f1=f1, precision=precision, recall=recall)
+def f1_pos(y, y_hat):
+    return f1(y, y_hat, 1)
+
+
+def f1_neg(y, y_hat):
+    return f1(y, y_hat, 0)
+
+
+def precision_pos(y, y_hat) -> float:
+    return precision(y, y_hat, 1)
+
+
+def precision_neg(y, y_hat) -> float:
+    return precision(y, y_hat, 0)
+
+
+def recall_pos(y, y_hat) -> float:
+    return recall(y, y_hat, 1)
+
+
+def recall_neg(y, y_hat) -> float:
+    return recall(y, y_hat, 0)
+
+
+evaluation_functions = dict(accuracy=accuracy,
+                            f1_pos=f1_pos, precision_pos=precision_pos, recall_pos=recall_pos,
+                            f1_neg=f1_neg, precision_neg=precision_neg, recall_neg=recall_neg)
 
 
 def evaluate(y, y_hat) -> th.Dict[str, float]:

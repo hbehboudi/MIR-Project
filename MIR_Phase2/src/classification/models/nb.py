@@ -7,7 +7,7 @@ class NaiveBayes(BaseEstimator, ClassifierMixin):
     def __init__(self, kind):
         self.kind = kind
 
-    def fit(self, X, y, **fit_params):
+    def fit(self, X, y):
         X, y = check_X_y(X, y)
         self.priors_ = np.bincount(y) / len(y)
         self.n_classes_ = np.max(y) + 1

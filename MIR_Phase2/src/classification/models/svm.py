@@ -6,9 +6,9 @@ class SVM(BaseEstimator, ClassifierMixin):
     def __init__(self, c):
         self.clf = svm.SVC(kernel='linear', C=c)
 
-    def fit(self, x, y, **fit_params):
+    def fit(self, x, y):
         self.clf.fit(x, y)
         return self
 
-    def predict(self, x, y=None):
+    def predict(self, x):
         return self.clf.predict(x)
