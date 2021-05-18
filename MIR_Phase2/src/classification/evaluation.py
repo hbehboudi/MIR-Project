@@ -16,23 +16,26 @@ def calculate_matrix(expected, actual):
 
 def accuracy(y, y_hat) -> float:
     matrix = calculate_matrix(y_hat, y)
-    return (matrix[0][0] + matrix[1][1]) / (matrix[0][0] + matrix[1][1] + matrix[1][0] + matrix[0][1])
+    acc = (matrix[0][0] + matrix[1][1]) / (matrix[0][0] + matrix[1][1] + matrix[1][0] + matrix[0][1])
+    return round(acc, 3)
 
 
 def f1(y, y_hat, pos):
     p = precision(y, y_hat, pos)
     r = recall(y, y_hat, pos)
-    return 2 * p * r / (p + r)
+    return round(2 * p * r / (p + r), 3)
 
 
 def precision(y, y_hat, pos) -> float:
     matrix = calculate_matrix(y_hat, y)
-    return (matrix[pos][pos]) / (matrix[0][pos] + matrix[1][pos])
+    pre = (matrix[pos][pos]) / (matrix[0][pos] + matrix[1][pos])
+    return round(pre, 3)
 
 
 def recall(y, y_hat, pos) -> float:
     matrix = calculate_matrix(y_hat, y)
-    return (matrix[pos][pos]) / (matrix[pos][0] + matrix[pos][1])
+    rec = (matrix[pos][pos]) / (matrix[pos][0] + matrix[pos][1])
+    return round(rec, 3)
 
 
 def f1_pos(y, y_hat):
