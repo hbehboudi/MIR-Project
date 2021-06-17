@@ -43,9 +43,16 @@ def get_year(browser):
 
 
 def get_authors(browser):
-    xpath = '//*[@id="mainArea"]/router-view/div/div/div/div/ma-author-string-collection/div/div'
-    elements = browser.find_elements_by_xpath(xpath=xpath)
-    return [auther.text for auther in elements]
+    xpath = '//*[@id="mainArea"]/router-view/div/div/div/div/ma-author-string-collection/div/div/div[%d]/a[1]'
+    authors = []
+
+    try:
+        while True:
+            authors.append(browser.find_element_by_xpath(xpath % (len(authors) + 1)).text)
+    except:
+        pass
+
+    return authors
 
 
 def get_related(browser):
@@ -88,7 +95,7 @@ def get_result(id):
     if read.__contains__(id):
         return
 
-    browser = webdriver.Chrome(executable_path='/home/hossein/Desktop/mir 3/chromedriver')
+    browser = webdriver.Chrome(executable_path='./chromedriver')
     browser.get("https://academic.microsoft.com/paper/" + str(id))
 
     time.sleep(2)
@@ -102,7 +109,7 @@ def get_result(id):
         "title": get_title(browser),
         "abstract": get_abstract(browser),
         "date": get_year(browser),
-        "authors": get_authors(browser)[0].split(", "),
+        "authors": get_authors(browser),
         "related_topics": get_related(browser),
         "citation_count": get_citation_count(browser),
         "reference_count": get_reference_count(browser),
