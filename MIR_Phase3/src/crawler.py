@@ -3,18 +3,6 @@ import time
 
 from selenium import webdriver
 
-unread = set()
-unread.add("2981549002")
-unread.add("3105081694")
-unread.add("2950893734")
-unread.add("3119786062")
-unread.add("2145339207")
-unread.add("2153579005")
-
-read = set()
-
-papers = []
-
 
 def click_button(browser):
     try:
@@ -91,11 +79,11 @@ def get_reference(browser):
     return references
 
 
-def get_result(id):
+def get_result(id, papers, read, unread):
     if read.__contains__(id):
         return
 
-    browser = webdriver.Chrome(executable_path='./chromedriver')
+    browser = webdriver.Chrome(executable_path='../chromedriver')
     browser.get("https://academic.microsoft.com/paper/" + str(id))
 
     time.sleep(2)
@@ -130,13 +118,28 @@ def get_result(id):
     browser.close()
 
 
-max = 2000
+def main():
+    unread = set()
+    unread.add("2981549002")
+    unread.add("3105081694")
+    unread.add("2950893734")
+    unread.add("3119786062")
+    unread.add("2145339207")
+    unread.add("2153579005")
 
-while len(papers) < max:
-    try:
-        get_result(unread.pop())
-    except:
-        pass
+    read = set()
+    papers = []
+    max = 2000
 
-with open('CrawledPapers.json', 'w') as outfile:
-    json.dump(papers, outfile)
+    while len(papers) < max:
+        try:
+            get_result(unread.pop(), papers, read, unread)
+        except:
+            pass
+
+    with open('../CrawledPapers.json', 'w') as outfile:
+        json.dump(papers, outfile)
+
+
+if __name__ == '__main__':
+    main()

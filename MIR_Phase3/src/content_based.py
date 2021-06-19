@@ -3,17 +3,17 @@ import json
 
 
 def get_topics():
-    with open('data.csv', mode='r') as csv_file:
+    with open('../data.csv', mode='r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
-            return [topic for topic in row.keys()]
+            return [topic.lower() for topic in row.keys()]
     return []
 
 
 def get_users():
     user_by_id = {}
 
-    with open('data.csv', mode='r') as csv_file:
+    with open('../data.csv', mode='r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         line_count = 0
 
@@ -35,7 +35,7 @@ def get_users():
 def get_papers(topics):
     papers = {}
 
-    with open('CrawledPapers.json', 'r') as crawled_papers:
+    with open('../CrawledPapers.json', 'r') as crawled_papers:
         for paper in json.loads(crawled_papers.read()):
             row = {}
 
@@ -66,17 +66,18 @@ def get_scores(papers, user):
     return scores
 
 
-topics = get_topics()
-users = get_users()
-papers = get_papers(topics)
+if __name__ == '__main__':
+    topics = get_topics()
+    users = get_users()
+    papers = get_papers(topics)
 
-print("user: ", end="")
-user_id = int(input())
-user = users[user_id]
+    print("user: ", end="")
+    user_id = int(input())
+    user = users[user_id]
 
-scores = get_scores(papers, user)
+    scores = get_scores(papers, user)
 
-result = [k for k, v in sorted(scores.items(), key=lambda item: item[1])]
-result.reverse()
-result = result[0:10]
-print({k: scores[k] for k in result})
+    result = [k for k, v in sorted(scores.items(), key=lambda item: item[1])]
+    result.reverse()
+    result = result[0:10]
+    print({k: scores[k] for k in result})
