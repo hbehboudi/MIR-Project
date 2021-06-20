@@ -67,7 +67,8 @@ def get_reference_count(browser):
 
 
 def get_reference(browser):
-    xpath = '//*[@id="mainArea"]/router-view/router-view/ma-edp-serp/div/div[2]/div/compose/div/div[2]/ma-card[%d]/div/compose/div/div[1]/a[1]'
+    xpath = '//*[@id="mainArea"]/router-view/router-view/ma-edp-serp/div/div[2]/div/compose/div/div[2]/ma-card[' \
+            '%d]/div/compose/div/div[1]/a[1] '
     references = []
     try:
         while True:
@@ -129,9 +130,9 @@ def main():
 
     read = set()
     papers = []
-    max = 2000
+    max_result = 2000
 
-    while len(papers) < max:
+    while len(papers) < max_result:
         try:
             get_result(unread.pop(), papers, read, unread)
         except:

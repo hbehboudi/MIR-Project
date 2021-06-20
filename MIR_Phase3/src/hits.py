@@ -18,14 +18,11 @@ def get_authors_by_paper_ids(ids, paper_by_id):
     return authors
 
 
-def main():
-    print("n: ", end="")
-    n = int(input())
-
+def calculate_hits(n, crawled_filename, hub_filename, authority_filename):
     graph = nx.DiGraph()
     paper_by_id = dict()
 
-    with open('../CrawledPapers.json', 'r') as crawled_papers:
+    with open(crawled_filename, 'r') as crawled_papers:
         papers = json.loads(crawled_papers.read())
 
         for paper in papers:
@@ -38,16 +35,25 @@ def main():
 
     hubs, authorities = nx.hits(graph)
 
-    with open('../Hub.json', 'w') as outfile:
-        json.dump(hubs, outfile)
+    if hub_filename != '':
+        with open(hub_filename, 'w') as outfile:
+            json.dump(hubs, outfile)
 
-    with open('../Authority.json', 'w') as outfile:
-        json.dump(authorities, outfile)
+    if authority_filename != '':
+        with open(authority_filename, 'w') as outfile:
+            json.dump(authorities, outfile)
 
     result = [k for k, v in sorted(authorities.items(), key=lambda item: item[1])]
     result.reverse()
     result = result[0:n]
     print({k: authorities[k] for k in result})
+
+
+def main():
+    print("n: ", end="")
+    n = int(input())
+
+    calculate_hits(n, '../CrawledPapers.json', '../Hub.json', '../Authority.json')
 
 
 if __name__ == '__main__':

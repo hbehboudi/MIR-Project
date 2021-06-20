@@ -2,13 +2,10 @@ import networkx as nx
 import json
 
 
-def main():
-    print("alpha: ", end="")
-    alpha = float(input())
-
+def calculate_page_ranks(alpha, crawled_filename, page_ranks_filename):
     graph = nx.DiGraph()
 
-    with open('../CrawledPapers.json', 'r') as crawled_papers:
+    with open(crawled_filename, 'r') as crawled_papers:
         papers = json.loads(crawled_papers.read())
 
         for paper in papers:
@@ -17,8 +14,15 @@ def main():
 
     page_ranks = nx.pagerank(graph, alpha)
 
-    with open('../PageRank.json', 'w') as outfile:
+    with open(page_ranks_filename, 'w') as outfile:
         json.dump(page_ranks, outfile)
+
+
+def main():
+    print("alpha: ", end="")
+    alpha = float(input())
+
+    calculate_page_ranks(alpha, "../CrawledPapers.json", "../PageRank.json")
 
 
 if __name__ == '__main__':

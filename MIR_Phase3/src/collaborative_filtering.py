@@ -15,8 +15,8 @@ def find_neighbours(users, selected_user_id, n):
     return result[0:n]
 
 
-def get_user(n, user_id):
-    users = get_users()
+def get_user(n, user_id, data_filename):
+    users = get_users(data_filename)
     result = {}
 
     neighbours = find_neighbours(users, user_id, n)
@@ -33,17 +33,11 @@ def get_user(n, user_id):
     return result
 
 
-if __name__ == '__main__':
-    topics = get_topics()
-    papers = get_papers(topics)
+def calculate_collaborative_filtering(user_id, n, data_filename, crawled_filename):
+    topics = get_topics(data_filename)
+    papers = get_papers(topics, crawled_filename)
 
-    print("user: ", end="")
-    user_id = int(input())
-
-    print("n: ", end="")
-    n = int(input())
-
-    user = get_user(n, user_id)
+    user = get_user(n, user_id, data_filename)
 
     scores = get_scores(papers, user)
 
@@ -52,4 +46,19 @@ if __name__ == '__main__':
     result = result[0:10]
 
     print(user)
-    print({k: scores[k] for k in result})
+    print()
+    print(result)
+
+
+def main():
+    print("user: ", end="")
+    user_id = int(input())
+
+    print("n: ", end="")
+    n = int(input())
+
+    calculate_collaborative_filtering(user_id, n, '../data.csv', '../CrawledPapers.json')
+
+
+if __name__ == '__main__':
+    main()
