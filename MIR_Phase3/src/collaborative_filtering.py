@@ -30,6 +30,11 @@ def get_user(n, user_id, data_filename):
         else:
             result[topic] = users[user_id][topic]
 
+    sum_of_values = sum(result.values())
+
+    for topic in result.keys():
+        result[topic] /= sum_of_values
+
     return result
 
 

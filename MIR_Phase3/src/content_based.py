@@ -76,7 +76,8 @@ def calculate_content_based(user_id, data_filename, crawled_filename):
     result = [k for k, v in sorted(scores.items(), key=lambda item: item[1])]
     result.reverse()
     result = result[0:10]
-    print({k: scores[k] for k in result})
+    # print({k: scores[k] for k in result})
+    print(result)
 
 
 def main():

@@ -307,4 +307,5 @@ def collaborative_filtering_menu():
             break
 
 
-main_menu()
+if __name__ == '__main__':
+    main_menu()
